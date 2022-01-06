@@ -1,5 +1,5 @@
 <?php
-require './users.php';
+require __DIR__.'/users/users.php';
 $users = getUsers();
 include './partials/header.php';
 ?>

@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . './users.php';
+require __DIR__ . '/users/users.php';
 if(!isset($_GET['id'])){
     include './partials/not_found.php';
     exit;
@@ -11,7 +11,23 @@ if(!$user){
     exit;
 }
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    updateUsers($_POST, $userId);
+    $user = updateUsers($_POST, $userId);
+    if(isset($_FILES['picture'])){
+        if(!is_dir(__DIR__.'/users/images')){
+            mkdir(__DIR__.'/users/images');
+        }
+        // Lấy tên file
+        $fileName  = $_FILES['picture']['name'];
+        // Lấy ra vị trí của '.'
+        $dotPosition = strpos($fileName,'.');
+        // Cắt ra đuôi của file (ex: .jpg)
+        $extension = substr($fileName, $dotPosition + 1);
+        // Lưu file vào thư mục /users/images
+        move_uploaded_file($_FILES['picture']['tmp_name'],__DIR__."/users/images/$userId.jpg"); 
+        // THêm extension vào data
+        $user['extension'] = $extension;
+        updateUsers($user, $userId);
+    }
     header('Location: ./index.php');
 }
 include './partials/header.php';

@@ -17,15 +17,19 @@ function createUsers($data){
 
 }
 function updateUsers($data, $id){
+    $updateUser = [];
     $users = getUsers();
     foreach($users as $key => $value){
         if($value['id'] == $id){
-            $users[$key] = array_merge($value,$data);
+
+            $users[$key] = $updateUsers =  array_merge($value,$data);
         }
     }
+    // Lưu thay đổi vào file users.json
     file_put_contents(__DIR__.'/users.json',json_encode($users,JSON_PRETTY_PRINT));
+    // Trả về dữ liệu đã update
+    return $updateUsers;
 }
 function deleteUsers($id){
 
 }
-
