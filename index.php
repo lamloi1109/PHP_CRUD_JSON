@@ -4,6 +4,9 @@ $users = getUsers();
 include './partials/header.php';
 ?>
 <div class="container">
+    <p>
+        <a href="./create.php" class="btn btn-success">Create New User</a>
+    </p>
     <table class="table">
         <thead>
             <tr>
