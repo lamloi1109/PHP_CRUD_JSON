@@ -17,7 +17,7 @@ function getUsersById($id)
 }
 function createUsers($data)
 {
-    $user = getUsers();
+    $users = getUsers();
     $data['id'] = rand(1000000, 2000000);
     $users[] = $data;
     putJson($users);
@@ -55,7 +55,7 @@ function uploadImage($file, $user)
         // Cắt ra đuôi của file (ex: .jpg)
         $extension = substr($fileName, $dotPosition + 1);
         // Lưu file vào thư mục /users/images
-        move_uploaded_file($file['tmp_name'], __DIR__ . "/images/" . $user['id'] . $extension);
+        move_uploaded_file($file['tmp_name'], __DIR__ . "/images/" . $user['id'] . ".".$extension);
         // THêm extension vào data
         $user['extension'] = $extension;
         updateUsers($user, $user['id']);

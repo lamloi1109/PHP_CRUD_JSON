@@ -3,9 +3,9 @@
         <div class="card-header">
         <h3>
             <?php if($user['id'] == ''): ?>
-               Update user: <i><?php echo $user['name']; ?></i>
+                Create user
             <?php else: ?>
-
+                Update user: <i><?php echo $user['name']; ?></i>
             <?php endif ?>
         </h3>
         </div>
