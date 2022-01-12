@@ -19,6 +19,13 @@ include './partials/header.php';
         <div class="card-header">
             <h3>View User: <i><?php echo $user['name']; ?></i></h3>
         </div>
+        <div class="card-body">
+            <a href="update.php?id=<?php echo $user['id'] ?>" class="btn btn-sm btn-outline-secondary">Update</a>
+            <form style="display: inline-block;" action="./delete.php" method="post">
+                <input type="hidden" value="<?php echo $user['id'] ?>" name="id">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+            </form>
+        </div>
         <table class="table">
             <tbody>
                 <tr>

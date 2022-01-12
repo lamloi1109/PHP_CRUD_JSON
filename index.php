@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/users/users.php';
+require __DIR__ . '/users/users.php';
 $users = getUsers();
 include './partials/header.php';
 ?>
@@ -23,8 +23,8 @@ include './partials/header.php';
             <?php foreach ($users as $user) : ?>
                 <tr>
                     <td>
-                        <?php if( isset($user['extension'])):?>
-                            <img src="<?php echo  "users/images/".$user['id'].".".$user['extension'] ?>" alt="" width="50px" height="50px">
+                        <?php if (isset($user['extension'])) : ?>
+                            <img src="<?php echo  "users/images/" . $user['id'] . "." . $user['extension'] ?>" alt="" width="50px" height="50px">
                         <?php endif; ?>
                     </td>
                     <td><?php echo $user['name'] ?></td>
@@ -35,7 +35,10 @@ include './partials/header.php';
                     <td>
                         <a href="view.php?id=<?php echo $user['id'] ?>" class="btn btn-sm btn-outline-info">View</a>
                         <a href="update.php?id=<?php echo $user['id'] ?>" class="btn btn-sm btn-outline-secondary">Update</a>
-                        <a href="delete.php?id=<?php echo $user['id'] ?>" class="btn btn-sm btn-outline-danger">Delete</a>
+                        <form style="display: inline-block;" action="./delete.php" method="post">
+                            <input type="hidden" value="<?php echo $user['id'] ?>" name="id">
+                            <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach ?>
