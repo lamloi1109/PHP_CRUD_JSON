@@ -41,8 +41,8 @@ function updateUsers($data, $id)
 function deleteUsers($id)
 {
     $users = getUsers();
-    foreach($users as $i => $user){
-        if( $user['id'] == $id ){
+    foreach ($users as $i => $user) {
+        if ($user['id'] == $id) {
             array_splice($users, $i, 1);
         }
     }
@@ -62,7 +62,7 @@ function uploadImage($file, $user)
         // Cắt ra đuôi của file (ex: .jpg)
         $extension = substr($fileName, $dotPosition + 1);
         // Lưu file vào thư mục /users/images
-        move_uploaded_file($file['tmp_name'], __DIR__ . "/images/" . $user['id'] . ".".$extension);
+        move_uploaded_file($file['tmp_name'], __DIR__ . "/images/" . $user['id'] . "." . $extension);
         // THêm extension vào data
         $user['extension'] = $extension;
         updateUsers($user, $user['id']);
@@ -72,4 +72,29 @@ function uploadImage($file, $user)
 function putJson($users)
 {
     file_put_contents(__DIR__ . '/users.json', json_encode($users, JSON_PRETTY_PRINT));
+}
+
+function validateUser($user,&$errors)
+{
+    $isValid = true;
+
+    // Start of validation
+    if (!$user['name']) {
+        $isValid = false;
+        $errors['name'] = 'Name is mandatory';
+    }
+    if (!$user['username'] || strlen($user['username']) < 6 || strlen($user['username']) > 16) {
+        $isValid = false;
+        $errors['username'] = 'Username is required and it must be more than 6 and less then 16 character';
+    }
+    if (!filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
+        $isValid = false;
+        $errors['email'] = 'This must be a valid email address';
+    }
+    if (!filter_var($user['phone'], FILTER_VALIDATE_INT)) {
+        $isValid = false;
+        $errors['phone'] = 'This must be a valids phone number';
+    }
+    // End of validation
+    return $isValid;
 }
